@@ -1,3 +1,4 @@
+"use client";
 import { CommentType } from "@/lib/types";
 import React from "react";
 import {

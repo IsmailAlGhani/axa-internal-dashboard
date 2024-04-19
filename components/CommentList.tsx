@@ -1,3 +1,4 @@
+"use client";
 import { CommentType, PostType } from "@/lib/types";
 import React from "react";
 import { Button } from "./ui/button";

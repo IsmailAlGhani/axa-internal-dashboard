@@ -1,3 +1,4 @@
+"use client";
 import { BASE_URL } from "@/lib/fetch";
 import { PostType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
