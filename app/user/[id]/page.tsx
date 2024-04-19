@@ -6,6 +6,35 @@ import { getAlbums, getPosts, getUser } from "@/lib/fetch";
 
 export const revalidate = 60;
 
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+
+  // fetch data
+  const user = await getUser(id);
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: user.username,
+    description: `Detail for user ${user.name}`,
+    openGraph: {
+      images: ["/todos-background.jpg", ...previousImages],
+    },
+  };
+}
+
 export default async function Page({
   params,
 }: Readonly<{

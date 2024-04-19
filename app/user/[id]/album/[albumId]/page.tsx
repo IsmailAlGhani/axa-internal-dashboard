@@ -2,6 +2,34 @@ import BackButton from "@/components/BackButton";
 import BackGround from "@/components/Background";
 import { getPhotos } from "@/lib/fetch";
 import Image from "next/image";
+import { Metadata, ResolvingMetadata } from "next";
+
+type Props = {
+  params: { albumId: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.albumId;
+
+  // fetch data
+  const album = await getPhotos(id);
+
+  // optionally access and extend (rather than replace) parent metadata
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: `Album ${album.albums.title} Photo List`,
+    description: `Album ${album.albums.title} with Photo List`,
+    openGraph: {
+      images: ["/todos-background.jpg", ...previousImages],
+    },
+  };
+}
 
 export default async function Page({
   params,
