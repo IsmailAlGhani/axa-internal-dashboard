@@ -2,7 +2,7 @@ import BackGround from "@/components/Background";
 import UserList from "@/components/UserList";
 import { getUsers } from "@/lib/fetch";
 
-export default async function Home() {
+export default async function Page() {
   const usersData = await getUsers();
   return (
     <div className="h-screen overflow-hidden !text-white">
